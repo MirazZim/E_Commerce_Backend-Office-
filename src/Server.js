@@ -9,6 +9,7 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 
 const { pool } = require("./DB/pool");
+const userRoutes = require("./routes/userRoutes");
 
 app.use(bodyParser.json());
 app.use(morgan("combined"));
@@ -25,6 +26,8 @@ app.use(
 
 app.use(express.json({ limit: "10mb" }));
 
+// Routes
+app.use("/api", userRoutes);
 // Database connection check
 pool
   .getConnection()
