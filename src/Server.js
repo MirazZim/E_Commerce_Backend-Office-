@@ -29,6 +29,7 @@ app.use(express.json({ limit: "10mb" }));
 
 // Routes
 app.use("/users", userRoutes);
+app.use("/customers", customerRoutes);
 // Database connection check
 pool
   .getConnection()

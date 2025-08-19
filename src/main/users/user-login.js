@@ -90,7 +90,7 @@ const loginUser = async (loginData) => {
                 username: user.username,
                 email: user.email,
                 role: user.role,
-            },
+            }
         });
 
     } catch (err) {

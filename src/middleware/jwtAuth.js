@@ -2,9 +2,9 @@ const jwt = require("jsonwebtoken");
 
 const jwtAuth = async (req, res, next) => {
   // JWT is usually sent in Authorization header: "Bearer token"
-  console.log("JWT Auth Middleware Triggered");
+  // console.log("JWT Auth Middleware Triggered");
   const authHeader = req.headers.authorization;
-  console.log("Authorization Header:", authHeader);
+  // console.log("Authorization Header:", authHeader);
   if (!authHeader) {
     return res.status(401).json({ error: "Authorization header missing" });
   }
@@ -17,7 +17,7 @@ const jwtAuth = async (req, res, next) => {
   try {
     const payload = jwt.verify(token, process.env.JWT_SECRET);
     req.user = payload; // Attach decoded user info to the request object
-    console.log("JWT decoded user:", payload); // Add this line
+    // console.log("JWT decoded user:", payload); // Add this line
     next();
   } catch (err) {
     return res.status(401).json({ error: "Invalid or expired token" });

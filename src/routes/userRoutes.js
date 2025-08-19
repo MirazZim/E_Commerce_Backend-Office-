@@ -1,14 +1,14 @@
 const express = require("express");
 const jwtAuth = require("../middleware/jwtAuth");
-const { validateUserInput } = require("../middleware/register/register-data-validator");
+const { validateUserInput } = require("../middleware/user-register/register-data-validator");
 const { registerUser } = require("../main/users/user-register");
-const { validateLoginInput } = require("../middleware/login/login-data-validator");
+const { validateLoginInput } = require("../middleware/user-login/login-data-validator");
 const { loginUser } = require("../main/users/user-login");
 const { getUserDetails } = require("../main/users/user-details");
 
-const router = express.Router();
+const userRouter = express.Router();
 
-router.post("/register", validateUserInput, async (req, res) => {
+userRouter.post("/register", validateUserInput, async (req, res) => {
     registerUser(req.body)
         .then((data) => {
             return res.status(200).send({
@@ -25,7 +25,7 @@ router.post("/register", validateUserInput, async (req, res) => {
 });
 
 
-router.post("/login", validateLoginInput, async (req, res) => {
+userRouter.post("/login", validateLoginInput, async (req, res) => {
     loginUser(req.body)
         .then((data) => {
             return res.status(200).send({
@@ -43,10 +43,11 @@ router.post("/login", validateLoginInput, async (req, res) => {
         });
 })
 
-router.get("/:id", jwtAuth, async (req, res) => {
+userRouter.post("/get-data", jwtAuth, async (req, res) => {
     const requestData = {
-        userId: req.params.id,
-        requestingUser: req.user
+        requestingUser: req.user,
+        userId: req.body.userId
+
     };
 
     getUserDetails(requestData)
@@ -68,4 +69,4 @@ router.get("/:id", jwtAuth, async (req, res) => {
 
 
 
-module.exports = router;
+module.exports = userRouter;
