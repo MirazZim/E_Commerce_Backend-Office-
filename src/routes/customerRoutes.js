@@ -1,6 +1,7 @@
 const express = require("express");
 const jwtAuth = require("../middleware/jwtAuth");
 const { registerCustomer } = require("../main/customers/add-customer");
+const { getAllCustomers } = require("../main/customers/get-all-customers");
 
 const customerRouter = express.Router();
 
@@ -20,5 +21,26 @@ customerRouter.post("/create", async (req, res) => {
         });
 });
 
+
+customerRouter.get("/", jwtAuth, async (req, res) => {
+    const requestData = {
+        user: req.user
+    };
+
+    getAllCustomers(requestData)
+        .then((data) => {
+            return res.status(200).send({
+                status: data.status,
+                message: data.message,
+                customers: data.customers,
+            });
+        })
+        .catch((error) => {
+            return res.status(400).send({
+                status: error.status,
+                message: error.message,
+            });
+        });
+});
 
 module.exports = customerRouter;
