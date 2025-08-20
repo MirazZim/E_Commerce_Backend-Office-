@@ -43,7 +43,7 @@ userRouter.post("/login", validateLoginInput, async (req, res) => {
         });
 })
 
-userRouter.post("/get-data", jwtAuth, async (req, res) => {
+userRouter.post("/get-user-data", jwtAuth, async (req, res) => {
     const requestData = {
         requestingUser: req.user,
         userId: req.body.userId

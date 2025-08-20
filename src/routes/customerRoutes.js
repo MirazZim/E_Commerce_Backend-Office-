@@ -45,9 +45,9 @@ customerRouter.get("/", jwtAuth, async (req, res) => {
 });
 
 
-customerRouter.get("/get-customer-details", jwtAuth, async (req, res) => {
+customerRouter.post("/get-customer-details", jwtAuth, async (req, res) => {
     const requestData = {
-        customerId: req.query.id,
+        customerId: req.body.customerId,
         user: req.user
     };
 
